@@ -27,6 +27,8 @@ apply(A,2,mean)
 
 var(A)
 cov(A) # unbiaised par défaut => E[(X-E[X])*(Y-E[Y])]
+# Xc tableau de donnée centré en colonne
+# V= 1/n * Xc'*Xc
 cov.wt(A, method='unbiased') # S*² <=> l'estimateur sans biais de la variance
 cov.wt(A, method='ML') # S² <=> l'EMV de la variance
 

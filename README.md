@@ -8,6 +8,7 @@
 
 1. Project 1 : Descriptive statistics, Principal Component Analysis
 2. Project 2 : Classical multidimensional scaling, Hierarchical clustering, K-Means Clustering
-3.
 
 ### Supervised learning :
+
+3. Project 3 : Euclidian distance classifier, multiple discriminant analysis, K-Nearest Neighbor, Bayesian decision theory

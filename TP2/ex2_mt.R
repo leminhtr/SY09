@@ -35,31 +35,30 @@ plot(cah_mut_ctr, main="centroid")
 
 data("iris")
 
-iris_dist <- dist(iris[,-4]*iris[,-4])
 
-cah_irs <- hclust(iris_dist, method="complete")
-cah_irs_sgl <- hclust(iris_dist, method="single")
+iris_dist <- dist(iris[1:4])*dist(iris[1:4])
+
 # option "ward.D2" implements that criterion (Murtagh and Legendre 2014). 
 # With the latter, the dissimilarities are squared before cluster updating
 cah_irs_ward <- hclust(iris_dist, method="ward.D2")
+cah_irs_ward_rect <- rect.hclust(cah_irs_ward,3,border=rainbow(3))
+
+cah_irs <- hclust(iris_dist, method="complete")
+cah_irs_sgl <- hclust(iris_dist, method="single")
 cah_irs_ctr <- hclust(iris_dist, method="centroid")
+
 x11()
-par(mfrow=c(2,2))
-plot(cah_irs, main="complete")
-plot(cah_irs_sgl, main="single")
+
+#par(mfrow=c(2,2))
 plot(cah_irs_ward, main="ward D2")
-plot(cah_irs_ctr, main="centroid")
+plot(cah_irs_ward_rect, main="ward D2")
+#plot(cah_irs, main="complete")
+#plot(cah_irs_sgl, main="single")
+
+#plot(cah_irs_ctr, main="centroid")
 
 cdh_irs <- diana(iris_dist)
-
-x11()
-par(mfrow=c(1,2))
 plot(cdh_irs)
-
-
-
-
-
 
 
 

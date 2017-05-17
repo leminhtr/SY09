@@ -99,26 +99,38 @@ x11()
 x <- fit_aftd$points[,1]
 y <- fit_aftd$points[,2]
 
-fit <- cmdscale(mut, k=5) # -1/2 Q* D^2*Q
+fit <- cmdscale(mut, k=5) # -1/2 Q* D^2*Q ; AFTD
 fit_k3 <- kmeans(fit,3)
-clusplot(mut.raw,fit_k3$cluster,color=TRUE,  labels=2, lines=0, main = "K=3")
+clusplot(fit,fit_k3$cluster,color=TRUE,  labels=2, lines=0, main = "K=3")
 
-par(mfrow=c(1,2))
-plot(fit_aftd$points[,1],fit_aftd$points[,2], xlab="Coordinate 1", ylab="Coordinate 2", main="Metric	MDS")
-text(x, y, labels = row.names(mut.raw)) # on s'intéresse à la distance des points par rapport aux autres et distinguer des groupes
-clusplot(mut.raw,fit_k3$cluster,color=TRUE,  labels=2, lines=0, main = "K=3")
+fit2 <- cmdscale(mut, k=5) # -1/2 Q* D^2*Q ; AFTD
+fit_k32 <- kmeans(fit,3)
+clusplot(fit2,fit_k32$cluster,color=TRUE,  labels=2, lines=0, main = "K=3")
+
 
 # Q.2
 
-iner_mut_k3 <- matrix(0, nrow=100, 1)
-for(k in 1:1)
+iner_mut_k3 <- matrix(0, nrow=100, 5)
+colnames(iner_mut_k3)=c("k=1","k=2","k=3","k=4","k=5")
+for(k in 1:5)
 {
   for (i in 1:100){
-    iner_mut_k3[i,k] <-kmeans(fit,3)$tot.withinss
+    iner_mut_k3[i,k] <-kmeans(fit,k)$tot.withinss
   }
 }
-# mut K=1
-min(iner_mut_k3[,1])
 
-describe(as.factor(iner_crabs_k3))
-# 3621.850 valeur plus fréquente (26%)
+min_iner_mut=apply(iner_mut_k3,2,min)
+min_iner_mut
+plot(min_iner_mut, type="l", xlab="k", ylab="Inertie intra-classe")
+var_iner_mut=apply(iner_mut_k3,2,var)
+var_iner_mut
+summary(iner_mut_k3)
+describe(as.factor(iner_mut_k3))
+# k=2 : toujours la même valeur => la plus stable
+# k=3 : variance la plus faible après k=2
+
+x11()
+fit <- cmdscale(mut, k=5) # -1/2 Q* D^2*Q ; AFTD
+fit_k2 <- kmeans(fit,2)
+clusplot(fit,fit_k2$cluster,color=TRUE,  labels=2, lines=0, main = "K=2")
+

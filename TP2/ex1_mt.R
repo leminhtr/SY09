@@ -22,9 +22,11 @@ head(iris)
 ## ACP iris : 2 plot du premier plan factoriel
 res.acp.iris <- princomp(iris[,-5])
 
+x11()
 par(mfrow=c(1,2))
 plot(res.acp.iris$scores, main="Premier plan factoriel")
-plot(res.acp.iris$scores, col=iris$Species, main="Premier plan factoriel")
+plot(res.acp.iris$scores, col=topo.colors(3)[iris[,5]])
+legend("topright", c("Setosa", "Versicolor", "Virginica"), fill=topo.colors(3))
 # setosa, versicolor, virginica
 
 
@@ -41,10 +43,13 @@ res.acp.crabs <- princomp(crabs2_quant)
 dev.off()
 
 # plot premier plan factoriel : neutre, sp, sex
+x11()
 par(mfrow=c(1,3))
 plot(res.acp.crabs$scores, main="Premier plan factoriel")
-plot(res.acp.crabs$scores, col=crabs2$sp, main="Premier plan factoriel (sp)")
-plot(res.acp.crabs$scores, col=crabs2$sex, main="Premier plan factoriel (sex)")
+plot(res.acp.crabs$scores, col=topo.colors(3)[crabs2[,5]], main="Premier plan factoriel (sp)")
+legend("topleft", c("B","O"), fill=topo.colors(3))
+plot(res.acp.crabs$scores, col=topo.colors(3)[crabs2[,6]], main="Premier plan factoriel (sex)")
+legend("topleft", c("F","M"), fill=topo.colors(3))
 # 
 
 
@@ -86,6 +91,31 @@ plot(Shepard(mut.raw[lower.tri(mut.raw)],fit$points), main="k=3")
 fit<-cmdscale(mut,eig=TRUE,k=5)
 plot(Shepard(mut.raw[lower.tri(mut.raw)],fit$points), main="k=5")
 
+
+mut2<-cmdscale(mut, k=2)
+x11()
+
+plot(mut2, col=rainbow(ncol(mut.raw)), xlab="Axe 1", ylab="Axe 2")
+text(mut2[,1], mut2[,2],labels(mutmat[,1]), pos=1)
+abline(h=0,v=0)
+
+
+s2=Shepard(as.dist(mut),cmdscale(mut,k=2))
+s3=Shepard(as.dist(mut),cmdscale(mut,k=3))
+s4=Shepard(as.dist(mut),cmdscale(mut,k=4))
+s5=Shepard(as.dist(mut),cmdscale(mut,k=5))
+
+x11()
+
+par(mfrow=c(1,4))
+plot(s2, col=rainbow(ncol(mut.raw)), xlab="Dissimilarité", ylab="Distance", main="d=2")
+abline(0, 1)
+plot(s3, col=rainbow(ncol(mut.raw)), xlab="Dissimilarité", ylab="Distance", main="d=3")
+abline(0, 1)
+plot(s4, col=rainbow(ncol(mut.raw)), xlab="Dissimilarité", ylab="Distance", main="d=4")
+abline(0, 1)
+plot(s5, col=rainbow(ncol(mut.raw)), xlab="Dissimilarité", ylab="Distance", main="d=5")
+abline(0, 1)
 
 
 

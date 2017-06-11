@@ -12,3 +12,4 @@
 ### Supervised learning :
 
 3. Project 3 : Euclidian distance classifier, multiple discriminant analysis, K-Nearest Neighbor, Bayesian decision theory
+4. Discriminant analysis (Quadratic, linear), Naive Bayes Classifier, Linear/Logistic regression, Decision trees
